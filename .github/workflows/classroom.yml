@@ -1,0 +1,631 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: case_demo
+      id: case_demo
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: case_demo
+        setup-command: gcc conv_sequential.c -o conv_sequential
+        command: "./conv_sequential"
+        input: |-
+          8 5
+          7
+          5
+          3
+          2
+          0
+          4
+          2
+          5
+          1
+          1
+          2
+          2
+          1
+        expected-output: |-
+          25
+          19
+          13
+          17
+        comparison-method: contains
+        timeout: 10
+        max-score: 0
+    - name: case_easy1
+      id: case_easy1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: case_easy1
+        setup-command: gcc conv_sequential.c -o conv_sequential
+        command: "./conv_sequential"
+        input: |-
+          30 5
+          128
+          31
+          159
+          36
+          86
+          208
+          207
+          77
+          161
+          155
+          83
+          226
+          15
+          128
+          168
+          237
+          235
+          32
+          164
+          197
+          108
+          192
+          193
+          43
+          195
+          186
+          231
+          156
+          29
+          132
+          232
+          60
+          31
+          155
+          22
+        expected-output: |-
+          34662
+          79859
+          72248
+          50854
+          82521
+          84668
+          50036
+          88866
+          47180
+          53877
+          83977
+          76329
+          94118
+          57727
+          87684
+          98175
+          52090
+          83255
+          93787
+          48582
+          85939
+          90324
+          81708
+          86989
+          56369
+          77097
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: case_easy2
+      id: case_easy2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: case_easy2
+        setup-command: gcc conv_sequential.c -o conv_sequential
+        command: "./conv_sequential"
+        input: |-
+          100 10
+          87
+          25
+          44
+          176
+          198
+          130
+          74
+          20
+          109
+          122
+          124
+          131
+          83
+          147
+          72
+          30
+          97
+          117
+          57
+          39
+          147
+          167
+          212
+          69
+          64
+          18
+          29
+          254
+          216
+          186
+          44
+          154
+          121
+          179
+          176
+          43
+          240
+          111
+          246
+          171
+          84
+          207
+          120
+          166
+          112
+          19
+          69
+          252
+          243
+          62
+          48
+          206
+          87
+          240
+          210
+          33
+          100
+          194
+          198
+          60
+          154
+          208
+          96
+          119
+          139
+          190
+          149
+          146
+          82
+          245
+          127
+          237
+          163
+          2
+          206
+          79
+          119
+          213
+          35
+          196
+          146
+          57
+          14
+          152
+          169
+          237
+          222
+          169
+          89
+          65
+          205
+          208
+          223
+          75
+          129
+          143
+          2
+          137
+          197
+          157
+          89
+          120
+          252
+          126
+          111
+          79
+          187
+          102
+          62
+          68
+        expected-output: |-
+          113240
+          133554
+          137493
+          134748
+          126644
+          120723
+          123353
+          112211
+          113680
+          111809
+          113544
+          102518
+          97875
+          132095
+          139548
+          138487
+          110489
+          109245
+          115610
+          140279
+          172067
+          160819
+          152147
+          123734
+          168437
+          175940
+          180405
+          176887
+          160625
+          188500
+          179983
+          203155
+          179191
+          186659
+          190208
+          184171
+          181967
+          143184
+          152121
+          157585
+          179661
+          173252
+          137188
+          132325
+          178795
+          182311
+          182933
+          169453
+          161341
+          157003
+          180631
+          192105
+          154881
+          168582
+          179037
+          164143
+          161172
+          173557
+          188849
+          163932
+          174695
+          169539
+          199996
+          190410
+          192869
+          175348
+          162496
+          172802
+          170239
+          170830
+          155687
+          156570
+          156432
+          133505
+          143364
+          116702
+          160822
+          179943
+          180760
+          175586
+          169997
+          164983
+          178936
+          214389
+          206360
+          194536
+          161295
+          162456
+          160553
+          152786
+          162060
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: case_easy1_p
+      id: case_easy1_p
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: case_easy1_p
+        setup-command: gcc -fopenmp conv_parallel.c -o conv_parallel
+        command: "./conv_parallel"
+        input: |-
+          30 5
+          128
+          31
+          159
+          36
+          86
+          208
+          207
+          77
+          161
+          155
+          83
+          226
+          15
+          128
+          168
+          237
+          235
+          32
+          164
+          197
+          108
+          192
+          193
+          43
+          195
+          186
+          231
+          156
+          29
+          132
+          232
+          60
+          31
+          155
+          22
+        expected-output: |-
+          34662
+          79859
+          72248
+          50854
+          82521
+          84668
+          50036
+          88866
+          47180
+          53877
+          83977
+          76329
+          94118
+          57727
+          87684
+          98175
+          52090
+          83255
+          93787
+          48582
+          85939
+          90324
+          81708
+          86989
+          56369
+          77097
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: case_easy2_p
+      id: case_easy2_p
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: case_easy2_p
+        setup-command: gcc -fopenmp conv_parallel.c -o conv_parallel
+        command: "./conv_parallel"
+        input: |-
+          100 10
+          87
+          25
+          44
+          176
+          198
+          130
+          74
+          20
+          109
+          122
+          124
+          131
+          83
+          147
+          72
+          30
+          97
+          117
+          57
+          39
+          147
+          167
+          212
+          69
+          64
+          18
+          29
+          254
+          216
+          186
+          44
+          154
+          121
+          179
+          176
+          43
+          240
+          111
+          246
+          171
+          84
+          207
+          120
+          166
+          112
+          19
+          69
+          252
+          243
+          62
+          48
+          206
+          87
+          240
+          210
+          33
+          100
+          194
+          198
+          60
+          154
+          208
+          96
+          119
+          139
+          190
+          149
+          146
+          82
+          245
+          127
+          237
+          163
+          2
+          206
+          79
+          119
+          213
+          35
+          196
+          146
+          57
+          14
+          152
+          169
+          237
+          222
+          169
+          89
+          65
+          205
+          208
+          223
+          75
+          129
+          143
+          2
+          137
+          197
+          157
+          89
+          120
+          252
+          126
+          111
+          79
+          187
+          102
+          62
+          68
+        expected-output: |-
+          113240
+          133554
+          137493
+          134748
+          126644
+          120723
+          123353
+          112211
+          113680
+          111809
+          113544
+          102518
+          97875
+          132095
+          139548
+          138487
+          110489
+          109245
+          115610
+          140279
+          172067
+          160819
+          152147
+          123734
+          168437
+          175940
+          180405
+          176887
+          160625
+          188500
+          179983
+          203155
+          179191
+          186659
+          190208
+          184171
+          181967
+          143184
+          152121
+          157585
+          179661
+          173252
+          137188
+          132325
+          178795
+          182311
+          182933
+          169453
+          161341
+          157003
+          180631
+          192105
+          154881
+          168582
+          179037
+          164143
+          161172
+          173557
+          188849
+          163932
+          174695
+          169539
+          199996
+          190410
+          192869
+          175348
+          162496
+          172802
+          170239
+          170830
+          155687
+          156570
+          156432
+          133505
+          143364
+          116702
+          160822
+          179943
+          180760
+          175586
+          169997
+          164983
+          178936
+          214389
+          206360
+          194536
+          161295
+          162456
+          160553
+          152786
+          162060
+        comparison-method: contains
+        timeout: 10
+        max-score: 2
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        CASE_DEMO_RESULTS: "${{steps.case_demo.outputs.result}}"
+        CASE_EASY1_RESULTS: "${{steps.case_easy1.outputs.result}}"
+        CASE_EASY2_RESULTS: "${{steps.case_easy2.outputs.result}}"
+        CASE_EASY1_P_RESULTS: "${{steps.case_easy1_p.outputs.result}}"
+        CASE_EASY2_P_RESULTS: "${{steps.case_easy2_p.outputs.result}}"
+      with:
+        runners: case_demo,case_easy1,case_easy2,case_easy1_p,case_easy2_p
