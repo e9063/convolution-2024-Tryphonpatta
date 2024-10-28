@@ -1,0 +1,5 @@
+25
+19
+13
+17
+Time taken: 0.000014 seconds
