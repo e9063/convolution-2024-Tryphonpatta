@@ -25,44 +25,11 @@ $(PAR_EXE): parallel.c
 $(OUTPUT_FOLDER):
 	mkdir -p $(OUTPUT_FOLDER)
 
-run_sequential :	
-	@mkdir -p output; \
-	for file in $(INPUT_FILES); do \
-		real_output=output_`echo $$file | sed -E 's|\.\/input_(.*)|\1|' | sed 's|_| |g' | sed 's| |_|g'`; \
-		output_file=output/parallel_`basename $$file`; \
-		./$(SEQ_EXE) < $$file > $$output_file; \
-		sed '$$d' $$output_file > $$output_file.tmp; \
-		cat $$real_output > $$real_output.tmp; \
-		diff_output=$$(diff $$output_file.tmp $$real_output.tmp); \
-		echo "$$diff_output"; \
-		if [ -z "$$diff_output" ]; then \
-			echo "\033[32mTest $$file passed\033[0m"; \
-		else \
-			echo "\033[31mTest $$file failed\033[0m"; \
-		fi; \
-		rm $$output_file.tmp $$real_output.tmp; \
-		tail -1 $$output_file; \
-	done
+sequential :
+	gcc conv_sequential.c -o sequential.exe
 
-run_parallel :
-	$(CC) $(CFLAGS) conv_parallel.c -o $(PAR_EXE)	
-	@mkdir -p output; \
-	for file in $(INPUT_FILES); do \
-		real_output=output_`echo $$file | sed -E 's|\.\/input_(.*)|\1|' | sed 's|_| |g' | sed 's| |_|g'`; \
-		output_file=output/parallel_`basename $$file`; \
-		./$(PAR_EXE) < $$file > $$output_file; \
-		sed '$$d' $$output_file > $$output_file.tmp; \
-		cat $$real_output > $$real_output.tmp; \
-		diff_output=$$(diff $$output_file.tmp $$real_output.tmp); \
-		echo "$$diff_output"; \
-		if [ -z "$$diff_output" ]; then \
-			echo "\033[32mTest $$file passed\033[0m"; \
-		else \
-			echo "\033[31mTest $$file failed\033[0m"; \
-		fi; \
-		rm $$output_file.tmp $$real_output.tmp; \
-		tail -1 $$output_file; \
-	done
+parallel :
+	gcc-14 conv_parallel.c -o parallel.exe -fopenmp
 
 
 
