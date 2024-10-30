@@ -17,7 +17,7 @@ int main() {
         scanf("%d", &F[i]);
     }
     // ---- end input and malloc ----
-	int num_threads = (NF / 1000) < 1 ? 1 : (NF / 1000);
+	long long int num_threads = (NF * NA / 1000) < 1 ? 1 : (NF * NA / 1000);
     if (num_threads > omp_get_max_threads()) {
         num_threads = omp_get_max_threads(); // Limit to max threads available
     }
