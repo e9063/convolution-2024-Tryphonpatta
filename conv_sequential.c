@@ -20,7 +20,7 @@ int main() {
     }
     // ---- end input and malloc ----
 
-    int *ans = malloc(sizeof(int) * (NA - NF + 1));
+    long long int *ans = malloc(sizeof(long long int) * (NA - NF + 1));
     for (int i = 0; i < NA - NF + 1; i++) {
         ans[i] = 0;
     }
@@ -32,7 +32,7 @@ int main() {
     }
 
     for (int i = 0; i < NA - NF + 1; i++) {
-        printf("%d\n", ans[i]);
+        printf("%lld\n", ans[i]);
     }
 
     // End timing
